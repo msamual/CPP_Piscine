@@ -1,0 +1,32 @@
+NAME	= a.out
+
+CXX		= clang++
+FLAGS	= -Wall -Wextra -Werror -std=c++98
+
+SRC_DIR	= ./
+OBJ_DIR	= objs/
+
+FILES	= main Bureaucrat Form
+
+SRCS 	= $(patsubst %, $(SRC_DIR)%.cpp, $(FILES))
+OBJS 	= $(patsubst %, $(OBJ_DIR)%.o, $(FILES))
+
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) -o $(NAME) $(FLAGS) $(OBJS)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
+	mkdir -p $(OBJ_DIR)
+	$(CXX) $(FLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(OBJ_DIR)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
